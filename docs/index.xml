@@ -2,44 +2,44 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Garey&#39;s Blog</title>
-    <link>https://blog.dinggd.org/</link>
+    <link>https://blog.dinggd.com/</link>
     <description>Recent content on Garey&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 27 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dinggd.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 27 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.dinggd.com/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>关于我</title>
-      <link>https://blog.dinggd.org/about/</link>
+      <link>https://blog.dinggd.com/about/</link>
       <pubDate>Sun, 27 Dec 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://blog.dinggd.org/about/</guid>
+      <guid>https://blog.dinggd.com/about/</guid>
       <description>Golang开发者，专注于Golang在游戏后端领域的开发应用</description>
     </item>
     
     <item>
       <title>测试文章</title>
-      <link>https://blog.dinggd.org/post/test/</link>
+      <link>https://blog.dinggd.com/post/test/</link>
       <pubDate>Sun, 27 Dec 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://blog.dinggd.org/post/test/</guid>
+      <guid>https://blog.dinggd.com/post/test/</guid>
       <description>这是一段测试文字。</description>
     </item>
     
     <item>
       <title>归档</title>
-      <link>https://blog.dinggd.org/archives/</link>
+      <link>https://blog.dinggd.com/archives/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://blog.dinggd.org/archives/</guid>
+      <guid>https://blog.dinggd.com/archives/</guid>
       <description></description>
     </item>
     
     <item>
       <title>搜索</title>
-      <link>https://blog.dinggd.org/search/</link>
+      <link>https://blog.dinggd.com/search/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://blog.dinggd.org/search/</guid>
+      <guid>https://blog.dinggd.com/search/</guid>
       <description></description>
     </item>
     

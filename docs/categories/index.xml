@@ -2,9 +2,9 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Garey&#39;s Blog</title>
-    <link>https://blog.dinggd.org/categories/</link>
+    <link>https://blog.dinggd.com/categories/</link>
     <description>Recent content in Categories on Garey&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language><atom:link href="https://blog.dinggd.org/categories/index.xml" rel="self" type="application/rss+xml" />
+    <language>zh-CN</language><atom:link href="https://blog.dinggd.com/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
