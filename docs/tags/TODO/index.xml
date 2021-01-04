@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on 少年码上记</title>
-    <link>https://blog.dinggd.com/post/</link>
-    <description>Recent content in Posts on 少年码上记</description>
+    <title>TODO on 少年码上记</title>
+    <link>https://blog.dinggd.com/tags/TODO/</link>
+    <description>Recent content in TODO on 少年码上记</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 03 Jan 2021 22:31:39 +0800</lastBuildDate><atom:link href="https://blog.dinggd.com/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 03 Jan 2021 22:31:39 +0800</lastBuildDate><atom:link href="https://blog.dinggd.com/tags/TODO/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>浅述TODO的作用</title>
       <link>https://blog.dinggd.com/post/%E6%B5%85%E8%BF%B0TODO%E7%9A%84%E4%BD%9C%E7%94%A8/</link>
