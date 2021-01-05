@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on 少年码上记</title>
-    <link>https://blog.dinggd.com/categories/</link>
+    <link>https://dinggd.com/categories/</link>
     <description>Recent content in Categories on 少年码上记</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 03 Jan 2021 22:31:39 +0800</lastBuildDate><atom:link href="https://blog.dinggd.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 03 Jan 2021 22:31:39 +0800</lastBuildDate><atom:link href="https://dinggd.com/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>代码规范</title>
-      <link>https://blog.dinggd.com/categories/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/</link>
+      <link>https://dinggd.com/categories/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/</link>
       <pubDate>Sun, 03 Jan 2021 22:31:39 +0800</pubDate>
       
-      <guid>https://blog.dinggd.com/categories/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/</guid>
+      <guid>https://dinggd.com/categories/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/</guid>
       <description></description>
     </item>
     
