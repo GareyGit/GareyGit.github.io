@@ -4,36 +4,56 @@
   
   <url>
     <loc>https://dinggd.com/categories/</loc>
-    <lastmod>2021-01-03T22:31:39+08:00</lastmod>
+    <lastmod>2021-01-06T13:12:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://dinggd.com/tags/fallthrough/</loc>
+    <lastmod>2021-01-06T13:12:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://dinggd.com/tags/golang/</loc>
+    <lastmod>2021-01-06T13:12:01+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://dinggd.com/post/</loc>
-    <lastmod>2021-01-03T22:31:39+08:00</lastmod>
+    <lastmod>2021-01-06T13:12:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://dinggd.com/tags/switch/</loc>
+    <lastmod>2021-01-06T13:12:01+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://dinggd.com/tags/</loc>
-    <lastmod>2021-01-03T22:31:39+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://dinggd.com/tags/TODO/</loc>
-    <lastmod>2021-01-03T22:31:39+08:00</lastmod>
+    <lastmod>2021-01-06T13:12:01+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://dinggd.com/tags/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/</loc>
-    <lastmod>2021-01-03T22:31:39+08:00</lastmod>
+    <lastmod>2021-01-06T13:12:01+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://dinggd.com/categories/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/</loc>
-    <lastmod>2021-01-03T22:31:39+08:00</lastmod>
+    <lastmod>2021-01-06T13:12:01+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://dinggd.com/</loc>
+    <lastmod>2021-01-06T13:12:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://dinggd.com/post/%E9%A1%B9%E7%9B%AE%E4%B8%AD%E5%BA%94%E8%AF%A5%E7%A6%81%E7%94%A8fallthrough/</loc>
+    <lastmod>2021-01-06T13:12:01+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://dinggd.com/tags/TODO/</loc>
     <lastmod>2021-01-03T22:31:39+08:00</lastmod>
   </url>
   

@@ -190,23 +190,40 @@
         
         <div class="post-content">
             <h2 id="前言">前言</h2>
-<p>很多人都知道，代码中待办的事项会用TODO注释，标记还未完成的待办项。但事实上，很多项目中TODO已经烂大街了。少三2后端项目中，仅仅游戏业务代码中就存在近百处TODO（上线之前曾经治过，只是又复发了），并且还在持续增加中。长此以往下去，TODO已经和常规注释没有差别了。</p>
+<p>很多人都知道，代码中待办的事项会用TODO注释，标记还未完成的待办项。但事实上，很多项目中TODO已经烂大街了。我们后端项目中，仅仅游戏业务代码中就存在近百处TODO（上线之前曾经治过，只是又复发了），并且还在持续增加中。长此以往下去，TODO已经和常规注释没有差别了。</p>
 <h2 id="todo的初衷">TODO的初衷</h2>
-<pre><code>// TODO + 说明：如果代码中有该注释，说明在该注释处有功能代码待编写，待实现的功能在说明中会简略说明。
-</code></pre><h2 id="如何有效使用todo">如何有效使用TODO</h2>
+<div class="highlight"><div style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// TODO + 说明：如果代码中有该注释，说明在该注释处有功能代码待编写，待实现的功能在说明中会简略说明。
+</span></code></pre></td></tr></table>
+</div>
+</div><h2 id="如何有效使用todo">如何有效使用TODO</h2>
 <p>我们都知道TODO是一个特殊注释，用以区分常规注释，并且在编辑器中会高亮显示。</p>
 <p>我相信下图代码的作者，开始写代码的时候，确实还没想好具体协议相关的操作要怎么实现，所以临时写了一个TODO以防忘记。但在具体实现了代码之后，却忘记删除TODO注释了。</p>
 <p>
-        <img class="mx-auto" alt="TODO1" src="/images/todo1.png" />   
+        <img class="mx-auto" alt="TODO1" src="/images/todo1.jpg" />   
     </p>
 <p>而且这样的TODO太多了之后，整个项目中已经不知道哪些TODO已经完成，哪些TODO还需要实现，这对项目管理是极为不利的。</p>
 <p>对于游戏项目，版本节奏很快，更新频率很高，对于TODO的管理，更需要主程操心，每个版本结版本之前必须检查一下，是否有影响到版本质量的TODO还未清理，是否存在已经完成的TODO依然存在着。</p>
 <h2 id="其他特殊注释">其他特殊注释</h2>
-<pre><code>// FIXME + 说明：如果代码中有该注释，说明该注释处代码需要修正，甚至代码是错误的，不能工作，需要修复，如何修正会在说明中简略说明。
+<div class="highlight"><div style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// FIXME + 说明：如果代码中有该注释，说明该注释处代码需要修正，甚至代码是错误的，不能工作，需要修复，如何修正会在说明中简略说明。
+</span><span style="color:#75715e"></span>
 
-
-// XXX + 说明：如果代码中有该注释，说明注释处代码虽然实现了功能，但是实现的方法有待商榷，希望将来能改进，要改进的地方会在说明中简略说明。
-</code></pre><p>简单来说，FIXME用来标识待修复项，XXX用来标识待优化项。当然每个版本结版本之前检查一下还是很重要的，否则这些注释就失去了原来的意义了。</p>
+<span style="color:#75715e">// XXX + 说明：如果代码中有该注释，说明注释处代码虽然实现了功能，但是实现的方法有待商榷，希望将来能改进，要改进的地方会在说明中简略说明。
+</span></code></pre></td></tr></table>
+</div>
+</div><p>简单来说，FIXME用来标识待修复项，XXX用来标识待优化项。当然每个版本结版本之前检查一下还是很重要的，否则这些注释就失去了原来的意义了。</p>
 <h2 id="代码规范特殊注释">代码规范（特殊注释）</h2>
 <ul>
 <li>当前版本内必须要做的待办事项使用TODO注释，并在完成后删除注释；</li>
@@ -214,7 +231,27 @@
 <li>bug修正理论上应该及时修复，如实际情况存在放到下个版本修复的bug，使用FIXME注释，并标明修复时限或版本号；</li>
 <li>主程应该每个版本检查TODO注释是否及时清零，并对FIXME和XXX的时效性进行检查并及时清理；</li>
 </ul>
-
+<div class="highlight"><div style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// 特殊注释
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// TODO 后续补充发送邮件逻辑--1.1.0
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// XXX 此模块因版本节奏太紧，存在优化空间，计划1.2.0版本进行优化
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// FIXME 此逻辑在极低概率下会出现显示错误的情况，与策划讨论后计划下个优化版本再修复(2020/08/20)
+</span></code></pre></td></tr></table>
+</div>
+</div>
         </div>
 
         
@@ -322,6 +359,10 @@ if (!doNotTrack) {
 <ul class="widget-list">
     
     <li>
+        <a href="https://dinggd.com/post/%E9%A1%B9%E7%9B%AE%E4%B8%AD%E5%BA%94%E8%AF%A5%E7%A6%81%E7%94%A8fallthrough/" title="项目中应该禁用fallthrough">项目中应该禁用fallthrough</a>
+    </li>
+    
+    <li>
         <a href="https://dinggd.com/post/%E6%B5%85%E8%BF%B0TODO%E7%9A%84%E4%BD%9C%E7%94%A8/" title="浅述TODO的作用">浅述TODO的作用</a>
     </li>
     
@@ -334,7 +375,7 @@ if (!doNotTrack) {
         <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
 <ul class="widget-list">
     
-    <li><a href="https://dinggd.com/categories/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/">代码规范 (1)</a></li>
+    <li><a href="https://dinggd.com/categories/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/">代码规范 (2)</a></li>
     
 </ul>
     </section>
@@ -344,6 +385,12 @@ if (!doNotTrack) {
 <div class="tagcloud">
     
     <a href="https://dinggd.com/tags/TODO/">TODO</a>
+    
+    <a href="https://dinggd.com/tags/fallthrough/">fallthrough</a>
+    
+    <a href="https://dinggd.com/tags/golang/">golang</a>
+    
+    <a href="https://dinggd.com/tags/switch/">switch</a>
     
     <a href="https://dinggd.com/tags/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/">代码规范</a>
     

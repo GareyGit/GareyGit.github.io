@@ -13,7 +13,7 @@
       <pubDate>Sun, 03 Jan 2021 22:31:39 +0800</pubDate>
       
       <guid>https://dinggd.com/post/%E6%B5%85%E8%BF%B0TODO%E7%9A%84%E4%BD%9C%E7%94%A8/</guid>
-      <description>前言 很多人都知道，代码中待办的事项会用TODO注释，标记还未完成的待办项。但事实上，很多项目中TODO已经烂大街了。少三2后端项目中，仅仅游戏业务代码中就存在近百处TODO（上线之前曾经治过，只是又复发了），并且还在持续增加中。长此以往下去，TODO已经和常规注释没有差别了。 TO</description>
+      <description>前言 很多人都知道，代码中待办的事项会用TODO注释，标记还未完成的待办项。但事实上，很多项目中TODO已经烂大街了。我们后端项目中，仅仅游戏业务代码中就存在近百处TODO（上线之前曾经治过，只是又复发了），并且还在持续增加中。长此以往下去，TODO已经和常规注释没有差别了。 TOD</description>
     </item>
     
   </channel>
