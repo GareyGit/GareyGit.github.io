@@ -260,17 +260,33 @@
     </p>
 <h2 id="问题原因">问题原因</h2>
 <p>几经周折，我们发现如果把Redis相关操作的代码注释掉，编译速度立马恢复，最后定位在这段代码之中：</p>
-<pre><code class="language-goalng" data-lang="goalng">package redisop
+<div class="highlight"><div style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#f92672">package</span> <span style="color:#75af00">redisop</span>
 
-type InBaseRedisCommand struct {
-}
+<span style="color:#00a8c8">type</span> <span style="color:#75af00">InBaseRedisCommand</span> <span style="color:#00a8c8">struct</span> <span style="color:#111">{</span>
+<span style="color:#111">}</span>
 
-func (this InBaseRedisCommand) GetUser(strKeySuffix string, ptRedis *redis.Client) (*in_base.User, error) {
-    //...
-}
+<span style="color:#00a8c8">func</span> <span style="color:#111">(</span><span style="color:#75af00">this</span> <span style="color:#75af00">InBaseRedisCommand</span><span style="color:#111">)</span> <span style="color:#75af00">GetUser</span><span style="color:#111">(</span><span style="color:#75af00">strKeySuffix</span> <span style="color:#00a8c8">string</span><span style="color:#111">,</span> <span style="color:#75af00">ptRedis</span> <span style="color:#f92672">*</span><span style="color:#75af00">redis</span><span style="color:#111">.</span><span style="color:#75af00">Client</span><span style="color:#111">)</span> <span style="color:#111">(</span><span style="color:#f92672">*</span><span style="color:#75af00">in_base</span><span style="color:#111">.</span><span style="color:#75af00">User</span><span style="color:#111">,</span> <span style="color:#00a8c8">error</span><span style="color:#111">)</span> <span style="color:#111">{</span>
+    <span style="color:#75715e">//...
+</span><span style="color:#75715e"></span><span style="color:#111">}</span>
 
-//...
-</code></pre><p>这段代码是由 protobuf 文件通过工具自动生成的，目的是把Redis的读写操作封装起来，供业务开发使用。因为是自动生成的代码，我们没有刻意控制其代码量，目前 InBaseRedisCommand 结构体的代码量接近8万行，方法数达到2000多个。相信很多项目中，这个量级的结构体并非没有可能，而且极有可能很常见。InBaseRedisCommand 结构体本身并没有问题，问题在于它被嵌套太多了。</p>
+<span style="color:#75715e">//...
+</span></code></pre></td></tr></table>
+</div>
+</div><p>这段代码是由 protobuf 文件通过工具自动生成的，目的是把Redis的读写操作封装起来，供业务开发使用。因为是自动生成的代码，我们没有刻意控制其代码量，目前 InBaseRedisCommand 结构体的代码量接近8万行，方法数达到2000多个。相信很多项目中，这个量级的结构体并非没有可能，而且极有可能很常见。InBaseRedisCommand 结构体本身并没有问题，问题在于它被嵌套太多了。</p>
 <div class="highlight"><div style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
 <table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
 <pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
