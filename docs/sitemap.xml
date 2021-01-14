@@ -4,7 +4,62 @@
   
   <url>
     <loc>https://dinggd.com/categories/</loc>
-    <lastmod>2021-01-08T14:37:05+08:00</lastmod>
+    <lastmod>2021-01-12T19:12:14+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://dinggd.com/tags/leveldb/</loc>
+    <lastmod>2021-01-12T19:12:14+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://dinggd.com/tags/mongodb/</loc>
+    <lastmod>2021-01-12T19:12:14+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://dinggd.com/tags/mysql/</loc>
+    <lastmod>2021-01-12T19:12:14+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://dinggd.com/post/</loc>
+    <lastmod>2021-01-12T19:12:14+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://dinggd.com/tags/redis/</loc>
+    <lastmod>2021-01-12T19:12:14+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://dinggd.com/tags/</loc>
+    <lastmod>2021-01-12T19:12:14+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://dinggd.com/post/%E5%8D%A1%E7%89%8C%E6%B8%B8%E6%88%8F%E7%90%86%E6%83%B3%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E6%96%B9%E6%A1%88/</loc>
+    <lastmod>2021-01-12T19:12:14+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://dinggd.com/tags/%E5%AD%98%E5%82%A8%E6%96%B9%E6%A1%88/</loc>
+    <lastmod>2021-01-12T19:12:14+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://dinggd.com/</loc>
+    <lastmod>2021-01-12T19:12:14+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://dinggd.com/tags/%E6%B8%B8%E6%88%8F%E6%A1%86%E6%9E%B6/</loc>
+    <lastmod>2021-01-12T19:12:14+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://dinggd.com/categories/%E6%B8%B8%E6%88%8F%E6%A1%86%E6%9E%B6/</loc>
+    <lastmod>2021-01-12T19:12:14+08:00</lastmod>
   </url>
   
   <url>
@@ -13,22 +68,7 @@
   </url>
   
   <url>
-    <loc>https://dinggd.com/post/</loc>
-    <lastmod>2021-01-08T14:37:05+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://dinggd.com/tags/</loc>
-    <lastmod>2021-01-08T14:37:05+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://dinggd.com/tags/%E5%8C%BF%E5%90%8D%E6%88%90%E5%91%98/</loc>
-    <lastmod>2021-01-08T14:37:05+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://dinggd.com/</loc>
     <lastmod>2021-01-08T14:37:05+08:00</lastmod>
   </url>
   

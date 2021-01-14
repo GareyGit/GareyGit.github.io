@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>游戏框架 on 少年码上记</title>
+    <link>https://dinggd.com/categories/%E6%B8%B8%E6%88%8F%E6%A1%86%E6%9E%B6/</link>
+    <description>Recent content in 游戏框架 on 少年码上记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 12 Jan 2021 19:12:14 +0800</lastBuildDate><atom:link href="https://dinggd.com/categories/%E6%B8%B8%E6%88%8F%E6%A1%86%E6%9E%B6/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>卡牌游戏理想中的数据存储方案</title>
+      <link>https://dinggd.com/post/%E5%8D%A1%E7%89%8C%E6%B8%B8%E6%88%8F%E7%90%86%E6%83%B3%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E6%96%B9%E6%A1%88/</link>
+      <pubDate>Tue, 12 Jan 2021 19:12:14 +0800</pubDate>
+      
+      <guid>https://dinggd.com/post/%E5%8D%A1%E7%89%8C%E6%B8%B8%E6%88%8F%E7%90%86%E6%83%B3%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E6%96%B9%E6%A1%88/</guid>
+      <description>卡牌游戏后端架构特色 分区分服运营 开服节奏快，滚服玩家多，老服玩家流失率高，造成存储数据中有效率较低。 开服时创角压力大 OB时流量迅猛，写压力相对较高。 平时在线量低，活动节点在线量暴增 平时数据库读写压力小，0点及部分活动时间，活跃玩家人数暴增，数据库读写压力也会暴增。 离线玩法多 离线数</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>卡牌游戏理想中的数据存储方案 | 少年码上记</title>
+    <meta property="og:title" content="卡牌游戏理想中的数据存储方案 - 少年码上记">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2021-01-12T19:12:14&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2021-01-12T19:12:14&#43;08:00'>
+        
+    <meta name="Keywords" content="golang,go语言,游戏开发">
+    <meta name="description" content="卡牌游戏理想中的数据存储方案">
+        
+    <meta name="author" content="东东">
+    <meta property="og:url" content="https://dinggd.com/post/%E5%8D%A1%E7%89%8C%E6%B8%B8%E6%88%8F%E7%90%86%E6%83%B3%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E6%96%B9%E6%A1%88/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+        <link href="https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" rel="stylesheet">
+    
+    
+    
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://dinggd.com">
+                        少年码上记
+                    </a>
+                
+                <p class="description">少年程序猿东东，Golang开发者，专注于手游服务器开发，致力于将开发中遇到的技术点滴记录下来...</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://dinggd.com">首页</a>
+                    
+                    <a  href="https://dinggd.com/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://dinggd.com/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#卡牌游戏后端架构特色">卡牌游戏后端架构特色</a></li>
+    <li><a href="#少三为什么选择-redis">少三为什么选择 Redis</a></li>
+    <li><a href="#开发-redislv-的原因">开发 RedisLV 的原因</a></li>
+    <li><a href="#redislv-的痛点">RedisLV 的痛点</a></li>
+    <li><a href="#其他可能方案">其他可能方案</a>
+      <ul>
+        <li><a href="#redis--mysql">Redis + MySQL</a></li>
+        <li><a href="#云-redis">云 Redis</a></li>
+        <li><a href="#mogodb">MogoDB</a></li>
+      </ul>
+    </li>
+    <li><a href="#理想中的存储方案">理想中的存储方案</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">卡牌游戏理想中的数据存储方案</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年1月12日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/%E6%B8%B8%E6%88%8F%E6%A1%86%E6%9E%B6'>游戏框架</a></span>
+            
+        </div>
+        
+        
+        
+        <div class="post-content">
+            <h2 id="卡牌游戏后端架构特色">卡牌游戏后端架构特色</h2>
+<ol>
+<li>
+<p>分区分服运营</p>
+<p>开服节奏快，滚服玩家多，老服玩家流失率高，造成存储数据中有效率较低。</p>
+</li>
+<li>
+<p>开服时创角压力大</p>
+<p>OB时流量迅猛，写压力相对较高。</p>
+</li>
+<li>
+<p>平时在线量低，活动节点在线量暴增</p>
+<p>平时数据库读写压力小，0点及部分活动时间，活跃玩家人数暴增，数据库读写压力也会暴增。</p>
+</li>
+<li>
+<p>离线玩法多</p>
+<p>离线数据读写相对较多，但还是集中在战力比较靠前的活跃玩家。</p>
+</li>
+<li>
+<p>跨服社交类玩法多</p>
+<p>跨服玩法多，尤其是跨服匹配类玩法，造成单服全员参与的排行榜设计较多。</p>
+</li>
+<li>
+<p>运营后期合服需求多</p>
+<p>老服留存低，长线运营后，老服存在鬼服情况多，合服需求势在必行。</p>
+</li>
+</ol>
+<h2 id="少三为什么选择-redis">少三为什么选择 Redis</h2>
+<ol>
+<li>
+<p>读写速度快</p>
+<p>Redis 是内存数据库，能支持超过 100K+ 每秒的读写频率。</p>
+</li>
+<li>
+<p>开发成本低</p>
+<p>Redis 是一个 key-value 存储系统，并且支持多种数据类型，包括 set，zset，list，hash，string五种数据类型，操作非常简单。</p>
+</li>
+<li>
+<p>离线玩法实现简单</p>
+<p>Redis 是内存数据库，全量数据均在内存中，玩家的离线数据和在线数据没有区别，也没有冷热数据读写差异。</p>
+</li>
+</ol>
+<h2 id="开发-redislv-的原因">开发 RedisLV 的原因</h2>
+<ol>
+<li>
+<p>备份对业务有影响</p>
+<p>Redis 分别提供了 RDB 和 AOF 两种持久化模式，但实际使用中对业务均有一定的不利影响。RDB 方式虽然是 fork() 出一个子进程来进行持久化工作，表面上对业务没太大影响。但在内存空间相对有限的游戏服务器，且完全依赖内存的Redis系统来说，持久化时瞬间的内存暴增是一个灾难。而AOF方式备份的数据恢复速度也是一个问题，维护时对业务的影响时间较大。</p>
+</li>
+<li>
+<p>Redis + ssdb 的设计存在数据不同步的风险</p>
+<p>为避免 Redis 持久化对业务的影响，我们专门起了一个进程，负责将 Redis 的操作同步写入到ssdb中，虽然解决了 Redis 持久化对业务的影响，但也造成了 Redis 和 ssdb 数据不同步的风险。</p>
+</li>
+</ol>
+<h2 id="redislv-的痛点">RedisLV 的痛点</h2>
+<p>先介绍一下 RedisLV，RedisLV 是 Redis + LevelDB的组合设计，是我们前技术大牛霸首的黑科技产品，在原来 Redis 内存操作基础之上加上 LeveDB 的存储操作。我们几个项目使用下来也发现一些痛点，这些痛点在卡牌游戏业务中也能忍受，但总归缺少了点什么，我们的新项目就必须直面这些问题：</p>
+<ol>
+<li>
+<p>内存占用高</p>
+<p>我们是 AllInOne 的设计，游戏进程、Redis 进程、ssdb 进程均在同一台服务器上，然后 Redis 仅用到了其内存数据库的特性，导致其对内存空间的依赖，对服务器内存配置要求就相对较高了。</p>
+</li>
+<li>
+<p>key-value 存储系统不利于数据迁移与合服</p>
+<p>key-value 存储系统的存储 key 之间没有关联，一个玩家的数据存在很多个存储 key。如果没有合理规划的话，上百的存储 key 都有可能（少三项目有近150个玩家的存储 key），非常不利于数据迁移及合服，玩家级数据备份也存在困难。</p>
+</li>
+<li>
+<p>写操作对磁盘 IO 性能有依赖</p>
+<p>这个问题应该是 RedisLV 设计之初没有考虑到的一点，我们都知道 LevelDB 的存储也是写内存，写操作不会直接写磁盘，为什么还会有对磁盘IO的性能依赖呢？而且即使是写磁盘，LevelDB 的顺序写文件，对磁盘也是最温柔的写操作啊。但我们忽略了 SST 文件合并这个操作，一旦某一个 level 的 SST 总文件大小超过一定限制，就会触发 Major Compaction，即 SST 文件合并。Major Compaction 简单来说就是会把 level n 和 level n+1 层的部分文件进行合并，重新写入到 level n+1层。这个过程会非常复杂，会对磁盘形成瞬间的 IO 压力。</p>
+</li>
+</ol>
+<h2 id="其他可能方案">其他可能方案</h2>
+<h3 id="redis--mysql">Redis + MySQL</h3>
+<p>这是一个游戏行业里常见的数据存储方案，Redis 作为内存数据库使用，数据落地存储到 Mysql 中。业务侧需要把 Redis 读写操作和 MySQL 操作进行封装，业务侧使用时无感，这样的同步写操作对 MySQL是一个考验。当然也有做异步写的方案，则会面临一个新的问题，Redis 和 MySQL 数据一致性问题，同样考验着框架设计者的能力。</p>
+<p>优点：</p>
+<ol>
+<li>备份、数据迁移、合服方便；</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>异步写 MySQL 存在数据一致性问题；</li>
+<li>存在冷热数据交换对读速度的影响，对业务开发要求也高；</li>
+<li>读写操作复杂，封装要求高；</li>
+<li>单服全员排行榜需要另外的 Redis 存储或代码设计辅助；</li>
+</ol>
+<h3 id="云-redis">云 Redis</h3>
+<p>云 Redis 是由云厂商提供的一套数据库系统，兼容开源 Redis 协议标准的、提供持久化的内存数据库服务，有高可靠及可扩展的集群架构优势，能够满足高读写性能场景及容量需弹性变配的业务需求。</p>
+<p>优点：</p>
+<ol>
+<li>Redis 的优点都有；</li>
+<li>功能强大，维护省心，工具完善；</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>key-value 设计，合表不方便；</li>
+<li>对云厂商的依赖性较大；</li>
+<li>成本相对自建高很多；</li>
+</ol>
+<h3 id="mogodb">MogoDB</h3>
+<p>MongoDB 是一个高性能，开源，无模式的文档型数据库系统，使用 C++ 语言编写。MongoDB 是面向文档的，它可以管理类似 JSON 的文档集合。数据可以被嵌套到复杂的体系中并保持可查询可索引，让应用程序可以以一种更加自然的方式来为数据建模。</p>
+<p>优点：</p>
+<ol>
+<li>内存占用可控，有冷热数据交换机制；</li>
+<li>NoSQL 设计，无表结构概念，也支持合表；</li>
+</ol>
+<p>缺点（问题）：</p>
+<ol>
+<li>最大的问题就是问题未知，无应用经验；</li>
+<li>读写速度比 Redis 稍慢；</li>
+<li>单服全员排行榜需要另外的 Redis 存储或代码设计辅助；</li>
+</ol>
+<h2 id="理想中的存储方案">理想中的存储方案</h2>
+<p>什么才是卡牌游戏理想中的存储方案，我们觉得必须满足以下几个条件：</p>
+<ol>
+<li>读写操作简单，速度快；</li>
+<li>有成熟的冷热数据交换机制，可节约内存；</li>
+<li>读写及备份操作不能影响业务，可接受有限的数据不一致；</li>
+<li>能够支持合表，能够支持玩家数据迁移及合服；</li>
+<li>可接受集群化，总体内存使用可控即可；</li>
+</ol>
+<p>经过一段时间的考察，我们发现 MongoDB 算是一款比较接近理想中的存储系统，但还需要一些验证，后续验证数据会再次进行分享。大家对这个方案认可吗，或者还有更好的建议，欢迎一起讨论。</p>
+
+        </div>
+
+        
+
+
+        
+
+<div class="post-archive">
+    <h2>See Also</h2>
+    <ul class="listing">
+        
+        <li><a href="/post/%E7%BB%93%E6%9E%84%E4%BD%93%E5%B5%8C%E5%A5%97%E9%80%A0%E6%88%90%E7%9A%84%E7%BC%96%E8%AF%91%E8%B5%84%E6%BA%90%E6%B6%88%E8%80%97%E9%97%AE%E9%A2%98/">结构体嵌套造成的编译资源消耗问题总结</a></li>
+        
+        <li><a href="/post/%E9%A1%B9%E7%9B%AE%E4%B8%AD%E5%BA%94%E8%AF%A5%E7%A6%81%E7%94%A8fallthrough/">项目中应该禁用fallthrough</a></li>
+        
+        <li><a href="/post/%E6%B5%85%E8%BF%B0TODO%E7%9A%84%E4%BD%9C%E7%94%A8/">浅述TODO的作用</a></li>
+        
+        <li><a href="/about/">关于我</a></li>
+        
+        <li><a href="/archives/">归档</a></li>
+        
+    </ul>
+</div>
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='/tags/%E6%B8%B8%E6%88%8F%E6%A1%86%E6%9E%B6'>游戏框架</a></li>
+                
+                <li><a href='/tags/%E5%AD%98%E5%82%A8%E6%96%B9%E6%A1%88'>存储方案</a></li>
+                
+                <li><a href='/tags/redis'>redis</a></li>
+                
+                <li><a href='/tags/leveldb'>leveldb</a></li>
+                
+                <li><a href='/tags/mongodb'>mongodb</a></li>
+                
+                <li><a href='/tags/mysql'>mysql</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2021 <a href="https://dinggd.com">少年码上记 By 东东</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script><script src="https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-9783893-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://dinggd.com/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://dinggd.com">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://dinggd.com/post/%E5%8D%A1%E7%89%8C%E6%B8%B8%E6%88%8F%E7%90%86%E6%83%B3%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E6%96%B9%E6%A1%88/" title="卡牌游戏理想中的数据存储方案">卡牌游戏理想中的数据存储方案</a>
+    </li>
+    
+    <li>
+        <a href="https://dinggd.com/post/%E7%BB%93%E6%9E%84%E4%BD%93%E5%B5%8C%E5%A5%97%E9%80%A0%E6%88%90%E7%9A%84%E7%BC%96%E8%AF%91%E8%B5%84%E6%BA%90%E6%B6%88%E8%80%97%E9%97%AE%E9%A2%98/" title="结构体嵌套造成的编译资源消耗问题总结">结构体嵌套造成的编译资源消耗问题总结</a>
+    </li>
+    
+    <li>
+        <a href="https://dinggd.com/post/%E9%A1%B9%E7%9B%AE%E4%B8%AD%E5%BA%94%E8%AF%A5%E7%A6%81%E7%94%A8fallthrough/" title="项目中应该禁用fallthrough">项目中应该禁用fallthrough</a>
+    </li>
+    
+    <li>
+        <a href="https://dinggd.com/post/%E6%B5%85%E8%BF%B0TODO%E7%9A%84%E4%BD%9C%E7%94%A8/" title="浅述TODO的作用">浅述TODO的作用</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://dinggd.com/categories/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/">代码规范 (2)</a></li>
+    
+    <li><a href="https://dinggd.com/categories/%E6%B8%B8%E6%88%8F%E6%A1%86%E6%9E%B6/">游戏框架 (1)</a></li>
+    
+    <li><a href="https://dinggd.com/categories/%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/">问题总结 (1)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://dinggd.com/tags/TODO/">TODO</a>
+    
+    <a href="https://dinggd.com/tags/fallthrough/">fallthrough</a>
+    
+    <a href="https://dinggd.com/tags/golang/">golang</a>
+    
+    <a href="https://dinggd.com/tags/leveldb/">leveldb</a>
+    
+    <a href="https://dinggd.com/tags/mongodb/">mongodb</a>
+    
+    <a href="https://dinggd.com/tags/mysql/">mysql</a>
+    
+    <a href="https://dinggd.com/tags/redis/">redis</a>
+    
+    <a href="https://dinggd.com/tags/switch/">switch</a>
+    
+    <a href="https://dinggd.com/tags/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/">代码规范</a>
+    
+    <a href="https://dinggd.com/tags/%E5%8C%BF%E5%90%8D%E6%88%90%E5%91%98/">匿名成员</a>
+    
+    <a href="https://dinggd.com/tags/%E5%AD%98%E5%82%A8%E6%96%B9%E6%A1%88/">存储方案</a>
+    
+    <a href="https://dinggd.com/tags/%E6%B3%A8%E9%87%8A/">注释</a>
+    
+    <a href="https://dinggd.com/tags/%E6%B8%B8%E6%88%8F%E6%A1%86%E6%9E%B6/">游戏框架</a>
+    
+    <a href="https://dinggd.com/tags/%E7%BB%93%E6%9E%84%E4%BD%93%E5%B5%8C%E5%A5%97/">结构体嵌套</a>
+    
+    <a href="https://dinggd.com/tags/%E7%BB%A7%E6%89%BF/">继承</a>
+    
+    <a href="https://dinggd.com/tags/%E7%BC%96%E8%AF%91%E9%80%9F%E5%BA%A6/">编译速度</a>
+    
+    <a href="https://dinggd.com/tags/%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/">问题总结</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://dinggd.com/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
