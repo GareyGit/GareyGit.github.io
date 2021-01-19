@@ -16,8 +16,8 @@
         
     <meta property="article:modified_time" content='2021-01-08T14:37:05&#43;08:00'>
         
-    <meta name="Keywords" content="golang,go语言,游戏开发">
-    <meta name="description" content="结构体嵌套造成的编译资源消耗问题总结">
+    <meta name="Keywords" content="golang,结构体嵌套,匿名成员,继承,编译速度,经验总结">
+    <meta name="description" content="golang 的结构体嵌套是一个能够实现类似继承的实现，在面向对象编程能力偏弱的 golang 中，嵌套应用非常广泛，但如果被嵌套的结构体非常复杂，嵌套次数也没有限制，对程序的编译将会造成相当高的资源浪费，编译时的内存和时间消耗都成倍增加，编译后的程序也非常大。">
         
     <meta name="author" content="东东">
     <meta property="og:url" content="https://dinggd.com/post/%E7%BB%93%E6%9E%84%E4%BD%93%E5%B5%8C%E5%A5%97%E9%80%A0%E6%88%90%E7%9A%84%E7%BC%96%E8%AF%91%E8%B5%84%E6%BA%90%E6%B6%88%E8%80%97%E9%97%AE%E9%A2%98/">
@@ -184,7 +184,7 @@
         <div class="post-meta">
             <span>|</span>
             
-            <span class="meta-category"><a href='/categories/%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93'>问题总结</a></span>
+            <span class="meta-category"><a href='/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93'>经验总结</a></span>
             
         </div>
         
@@ -369,26 +369,6 @@
         
 
 
-        
-
-<div class="post-archive">
-    <h2>See Also</h2>
-    <ul class="listing">
-        
-        <li><a href="/post/%E9%A1%B9%E7%9B%AE%E4%B8%AD%E5%BA%94%E8%AF%A5%E7%A6%81%E7%94%A8fallthrough/">项目中应该禁用fallthrough</a></li>
-        
-        <li><a href="/post/%E6%B5%85%E8%BF%B0TODO%E7%9A%84%E4%BD%9C%E7%94%A8/">浅述TODO的作用</a></li>
-        
-        <li><a href="/about/">关于我</a></li>
-        
-        <li><a href="/archives/">归档</a></li>
-        
-        <li><a href="/search/">搜索</a></li>
-        
-    </ul>
-</div>
-
-
         <div class="post-meta meta-tags">
             
             <ul class="clearfix">
@@ -403,7 +383,7 @@
                 
                 <li><a href='/tags/%E7%BC%96%E8%AF%91%E9%80%9F%E5%BA%A6'>编译速度</a></li>
                 
-                <li><a href='/tags/%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93'>问题总结</a></li>
+                <li><a href='/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93'>经验总结</a></li>
                 
             </ul>
             
@@ -464,6 +444,8 @@ if (!doNotTrack) {
 
 
 
+
+
                 </div>
 
                 <div id="secondary">
@@ -509,7 +491,7 @@ if (!doNotTrack) {
     
     <li><a href="https://dinggd.com/categories/%E6%B8%B8%E6%88%8F%E6%A1%86%E6%9E%B6/">游戏框架 (1)</a></li>
     
-    <li><a href="https://dinggd.com/categories/%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/">问题总结 (1)</a></li>
+    <li><a href="https://dinggd.com/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">经验总结 (1)</a></li>
     
 </ul>
     </section>
@@ -544,13 +526,13 @@ if (!doNotTrack) {
     
     <a href="https://dinggd.com/tags/%E6%B8%B8%E6%88%8F%E6%A1%86%E6%9E%B6/">游戏框架</a>
     
+    <a href="https://dinggd.com/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">经验总结</a>
+    
     <a href="https://dinggd.com/tags/%E7%BB%93%E6%9E%84%E4%BD%93%E5%B5%8C%E5%A5%97/">结构体嵌套</a>
     
     <a href="https://dinggd.com/tags/%E7%BB%A7%E6%89%BF/">继承</a>
     
     <a href="https://dinggd.com/tags/%E7%BC%96%E8%AF%91%E9%80%9F%E5%BA%A6/">编译速度</a>
-    
-    <a href="https://dinggd.com/tags/%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93/">问题总结</a>
     
 </div>
     </section>
