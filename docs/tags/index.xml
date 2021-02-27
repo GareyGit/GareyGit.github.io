@@ -6,7 +6,61 @@
     <description>Recent content in Tags on 少年码上记</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 12 Jan 2021 19:12:14 +0800</lastBuildDate><atom:link href="https://dinggd.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 16 Feb 2021 19:59:52 +0800</lastBuildDate><atom:link href="https://dinggd.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>OB</title>
+      <link>https://dinggd.com/tags/OB/</link>
+      <pubDate>Tue, 16 Feb 2021 19:59:52 +0800</pubDate>
+      
+      <guid>https://dinggd.com/tags/OB/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>公测</title>
+      <link>https://dinggd.com/tags/%E5%85%AC%E6%B5%8B/</link>
+      <pubDate>Tue, 16 Feb 2021 19:59:52 +0800</pubDate>
+      
+      <guid>https://dinggd.com/tags/%E5%85%AC%E6%B5%8B/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>分区分服</title>
+      <link>https://dinggd.com/tags/%E5%88%86%E5%8C%BA%E5%88%86%E6%9C%8D/</link>
+      <pubDate>Tue, 16 Feb 2021 19:59:52 +0800</pubDate>
+      
+      <guid>https://dinggd.com/tags/%E5%88%86%E5%8C%BA%E5%88%86%E6%9C%8D/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>技术难点</title>
+      <link>https://dinggd.com/tags/%E6%8A%80%E6%9C%AF%E9%9A%BE%E7%82%B9/</link>
+      <pubDate>Tue, 16 Feb 2021 19:59:52 +0800</pubDate>
+      
+      <guid>https://dinggd.com/tags/%E6%8A%80%E6%9C%AF%E9%9A%BE%E7%82%B9/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>游戏</title>
+      <link>https://dinggd.com/tags/%E6%B8%B8%E6%88%8F/</link>
+      <pubDate>Tue, 16 Feb 2021 19:59:52 +0800</pubDate>
+      
+      <guid>https://dinggd.com/tags/%E6%B8%B8%E6%88%8F/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>经验总结</title>
+      <link>https://dinggd.com/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Tue, 16 Feb 2021 19:59:52 +0800</pubDate>
+      
+      <guid>https://dinggd.com/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>leveldb</title>
       <link>https://dinggd.com/tags/leveldb/</link>
@@ -53,11 +107,11 @@
     </item>
     
     <item>
-      <title>游戏框架</title>
-      <link>https://dinggd.com/tags/%E6%B8%B8%E6%88%8F%E6%A1%86%E6%9E%B6/</link>
+      <title>游戏架构</title>
+      <link>https://dinggd.com/tags/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/</link>
       <pubDate>Tue, 12 Jan 2021 19:12:14 +0800</pubDate>
       
-      <guid>https://dinggd.com/tags/%E6%B8%B8%E6%88%8F%E6%A1%86%E6%9E%B6/</guid>
+      <guid>https://dinggd.com/tags/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/</guid>
       <description></description>
     </item>
     
@@ -76,15 +130,6 @@
       <pubDate>Fri, 08 Jan 2021 14:37:05 +0800</pubDate>
       
       <guid>https://dinggd.com/tags/%E5%8C%BF%E5%90%8D%E6%88%90%E5%91%98/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>经验总结</title>
-      <link>https://dinggd.com/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Fri, 08 Jan 2021 14:37:05 +0800</pubDate>
-      
-      <guid>https://dinggd.com/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/</guid>
       <description></description>
     </item>
     
