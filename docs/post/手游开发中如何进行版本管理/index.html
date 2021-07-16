@@ -233,16 +233,16 @@
 <p>如果我们想要回到某个未备份的版本，比如策划C让我们改某个功能，等我们改完之后，策划C又让我们改回去。在没有版本控制软件的时代里，我们只能把这个功能按照原来的逻辑重写一次。</p>
 <p>有了版本控制软件，我们可以找到自己及其他人在任何一次提交的代码，可以自由选择回退到任何历史版本。下图是我个人在少三项目4.2.0版本中骁勇榜开发过程中的提交记录，任何一个版本的修改内容都可以查看到，都可以恢复，再也不用担心策划的反悔了。</p>
 <p>
-        <a data-fancybox="gallery" href="/images/ss1_svn_history.png">
-            <img class="mx-auto" alt="少三1个人 svn 提交记录" src="/images/ss1_svn_history.png" />
+        <a data-fancybox="gallery" href="/images/ss1_svn_history.jpg">
+            <img class="mx-auto" alt="少三1个人 svn 提交记录" src="/images/ss1_svn_history.jpg" />
         </a>
     </p>
 <h3 id="3-多人合作开发">3. 多人合作开发</h3>
 <p>在没有版本控制软件的时代里，很难想想多人合作开发的过程，如果大家同时修改代码，想必每个人手中的代码都会不一样，这些代码如何合并到一个版本是一个极为复杂的工程。为了保证代码的一致性，必须确保同一时间只有一个人在同一个终端修改代码，这样的版本开发效率之低可想而知了。</p>
 <p>而现在各种版本控制软件都支持多人合作开发，每个人只需要修改自己要改的代码，这些软件都提供很好的工具将你的修改提交进版本中，也能及时把他人修改的内容合并到自己的代码中。下图是少三2项目中最近的git提交记录，体现了多人合作开发的复杂与频繁。</p>
 <p>
-        <a data-fancybox="gallery" href="/images/ss2_git_history.png">
-            <img class="mx-auto" alt="少三2 git 提交历史记录" src="/images/ss2_git_history.png" />
+        <a data-fancybox="gallery" href="/images/ss2_git_history.jpg">
+            <img class="mx-auto" alt="少三2 git 提交历史记录" src="/images/ss2_git_history.jpg" />
         </a>
     </p>
 <h3 id="4-问题回溯">4. 问题回溯</h3>
@@ -261,29 +261,29 @@
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-golang" data-lang="golang"><span style="color:#75715e">// user.go
 </span><span style="color:#75715e">// 20140415-1.2.0-武将光环系统-东东
-</span><span style="color:#75715e">// 20210428-1.2.50-神秘商店-廖廖
-</span><span style="color:#75715e">// 20210512-1.3.0-叛军系统-霸首
-</span><span style="color:#75715e">// 20210523-1.3.50-武将图鉴-随风
+</span><span style="color:#75715e">// 20140428-1.2.50-神秘商店-廖廖
+</span><span style="color:#75715e">// 20140512-1.3.0-叛军系统-霸首
+</span><span style="color:#75715e">// 20140523-1.3.50-武将图鉴-随风
 </span><span style="color:#75715e"></span><span style="color:#00a8c8">type</span> <span style="color:#75af00">User</span> <span style="color:#00a8c8">struct</span> <span style="color:#111">{</span>
     <span style="color:#75715e">//...
 </span><span style="color:#75715e"></span><span style="color:#111">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>有了SVN之后，我们可以很方便的找出哪个文件什么时间谁改过什么内容，这对于历史问题的排查非常有用，否则只能靠猜了。下图是少三项目项目初期的部分svn记录，当然，少三项目初期svn commit的注释是很不规范，某随风同学竟然不写注释提交（很不好的习惯），这在项目后期是绝对不允许的。</p>
+</div><p>有了SVN之后，我们可以很方便的找出哪个文件什么时间谁改过什么内容，这对于历史问题的排查非常有用，否则只能靠猜了。下图是少三项目项目初期的部分svn记录，当然，少三项目初期svn commit的注释确实很不规范，某位同学竟然不写注释提交代码（很不好的习惯），这在项目后期是绝对不允许的。</p>
 <p>
-        <a data-fancybox="gallery" href="/images/ss1_svn_history1.png">
-            <img class="mx-auto" alt="少三1 user 文件的提交记录" src="/images/ss1_svn_history1.png" />
+        <a data-fancybox="gallery" href="/images/ss1_svn_history1.jpg">
+            <img class="mx-auto" alt="少三1 user 文件的提交记录" src="/images/ss1_svn_history1.jpg" />
         </a>
     </p>
 <p>
-        <a data-fancybox="gallery" href="/images/ss1_svn_history3.png">
-            <img class="mx-auto" alt="少三1 svn 提交文件列表" src="/images/ss1_svn_history3.png" />
+        <a data-fancybox="gallery" href="/images/ss1_svn_history2.jpg">
+            <img class="mx-auto" alt="少三1 svn 提交文件列表" src="/images/ss1_svn_history2.jpg" />
         </a>
     </p>
 <p>下图的提交记录就正规很多了，土八路进化为正规军了。</p>
 <p>
-        <a data-fancybox="gallery" href="/images/ss1_svn_history2.png">
-            <img class="mx-auto" alt="少三1后期 svn 提交记录" src="/images/ss1_svn_history2.png" />
+        <a data-fancybox="gallery" href="/images/ss1_svn_history3.jpg">
+            <img class="mx-auto" alt="少三1后期 svn 提交记录" src="/images/ss1_svn_history3.jpg" />
         </a>
     </p>
 <h3 id="5-多分支并行开发">5. 多分支并行开发</h3>
@@ -342,7 +342,7 @@
 <p>这套逻辑来自于SVN，Git也基本适用，Git默认的主干为master，其他是一样的。</p>
 <h2 id="手游开发中的版本控制">手游开发中的版本控制</h2>
 <h3 id="1-版控软件的选择git-or-svn-">1. 版控软件的选择（git or svn ?）</h3>
-<p>我相信每个项目组决定用什么版本控制软件的时候，都会有一次争执，到底是用git还是svn？我所经历的游戏项目，都是以SVN作为核心版本控制软件，周边一些框架与工具或者文档会以Git作为版本控制软件。作为程序员来说，确实会更喜欢Git一些，原因在于一些开源项目多存于github上，个人项目也会选择github等基于Git做版本控制的代码托管平台。那为什么公司内的项目大多都是SVN呢，主要原因有两个，一是Git操作成本偏高，策划美术等职能同学不喜欢；另一个是Git的权限控制太简单，没有办法按照职能分配目录权限。我们新项目在版控软件的选择上也经过了一番battle，最终还是无奈地选择了SVN，作为程序猿的我真的很无奈啊。</p>
+<p>我相信每个项目组决定用什么版本控制软件的时候，都会有一次争执，到底是用git还是svn？我所经历的游戏项目，都是以SVN作为核心版本控制软件，周边一些框架与工具或者文档会以Git作为版本控制软件。作为程序猿来说，确实会更喜欢Git一些，原因在于一些开源项目多存于github上，个人项目也会选择github等基于Git做版本控制的代码托管平台。那为什么公司内的项目大多都是SVN呢，主要原因有两个，一是Git操作成本偏高，策划美术等职能同学不喜欢；另一个是Git的权限控制太简单，没有办法按照职能分配目录权限。我们新项目在版控软件的选择上也经过了一番battle，最终还是无奈地选择了SVN，作为程序猿的我真的很无奈啊。</p>
 <h3 id="2-分支管理">2. 分支管理</h3>
 <p>每个项目都有自己的分支管理办法，但手游项目属于中小型项目，属于敏捷开发型项目，开发节奏较快，开发周期没有传统软件行业那么长。少年工作室的项目版本开发周期基本维持在一个月一个大版本，半个月一个优化版本的频率，公司内其他项目组也有更快的周更节奏。开发节奏快，就意味着版本分支多，甚至有多分支同时开发的可能。因此，分支管理是否合理，会影响到版本开发效率与质量。</p>
 <p>下图为少年工作室分支管理规范，目前所有项目基本都是按照这个规范在进行管理。</p>
