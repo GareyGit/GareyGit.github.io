@@ -35,12 +35,12 @@
     </item>
     
     <item>
-      <title>结构体嵌套造成的编译资源消耗问题总结</title>
+      <title>结构体内嵌造成的编译资源消耗问题总结</title>
       <link>https://dinggd.com/post/%E7%BB%93%E6%9E%84%E4%BD%93%E5%B5%8C%E5%A5%97%E9%80%A0%E6%88%90%E7%9A%84%E7%BC%96%E8%AF%91%E8%B5%84%E6%BA%90%E6%B6%88%E8%80%97%E9%97%AE%E9%A2%98/</link>
       <pubDate>Fri, 08 Jan 2021 14:37:05 +0800</pubDate>
       
       <guid>https://dinggd.com/post/%E7%BB%93%E6%9E%84%E4%BD%93%E5%B5%8C%E5%A5%97%E9%80%A0%E6%88%90%E7%9A%84%E7%BC%96%E8%AF%91%E8%B5%84%E6%BA%90%E6%B6%88%E8%80%97%E9%97%AE%E9%A2%98/</guid>
-      <description>何为结构体嵌套 golang 中允许定义不带名称的结构体成员，只需要指定类型即可，这种结构体成员称作匿名成员。将一个命名结构体当做另一个结构体类型的匿名成员使用，即为结构体嵌套。如下示例中，Circle 和 Wheel都拥有一个匿名成员，Point 被嵌套到 Circle 中，Circle 被嵌套到 Wheel 中。 1 2 3 4 5</description>
+      <description>何为结构体内嵌 golang 中允许定义不带名称的结构体成员，只需要指定类型即可，这种结构体成员称作匿名成员。将一个命名结构体当做另一个结构体类型的匿名成员使用，即为结构体内嵌。如下示例中，Circle 和 Wheel都拥有一个匿名成员，Point 被内嵌到 Circle 中，Circle 被内嵌到 Wheel 中。 1 2 3 4 5</description>
     </item>
     
     <item>
