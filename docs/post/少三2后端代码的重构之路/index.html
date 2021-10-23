@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+
+    <title>少三2后端代码的重构之路 | 少年码上记</title>
+    <meta property="og:title" content="少三2后端代码的重构之路 - 少年码上记">
+    <meta property="og:type" content="article">
+        
+    <meta property="article:published_time" content='2021-10-05T16:38:09&#43;08:00'>
+        
+        
+    <meta property="article:modified_time" content='2021-10-05T16:38:09&#43;08:00'>
+        
+    <meta name="Keywords" content="少三2,代码秀,代码重构">
+    <meta name="description" content="对于大多数程序猿来说，即使是屎一样的代码，只要在规定的时间内完成，最后的运行结果是正确的，其他就都不重要了。所以，越是老项目，越是没有人愿意去维护，很多人觉得最好的解决办法是跳槽，然而，很大的概率是：你刚从一座屎山跳了出来，却掉进了另一座屎山。">
+        
+    <meta name="author" content="东东">
+    <meta property="og:url" content="https://dinggd.com/post/%E5%B0%91%E4%B8%892%E5%90%8E%E7%AB%AF%E4%BB%A3%E7%A0%81%E7%9A%84%E9%87%8D%E6%9E%84%E4%B9%8B%E8%B7%AF/">
+    <link rel="shortcut icon" href='/favicon.ico'  type="image/x-icon">
+
+    <link rel="stylesheet" href='/css/normalize.css'>
+    <link rel="stylesheet" href='/css/style.css'>
+    <script type="text/javascript" src="//cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
+    
+    
+        <link href="https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" rel="stylesheet">
+    
+    
+    
+    
+</head>
+
+
+<body>
+    <header id="header" class="clearfix">
+    <div class="container">
+        <div class="col-group">
+            <div class="site-name ">
+                
+                    <a id="logo" href="https://dinggd.com">
+                        少年码上记
+                    </a>
+                
+                <p class="description">少年程序猿东东，Golang开发者，专注于手游服务器开发，致力于将开发中遇到的技术点滴记录下来...</p>
+            </div>
+            <div>
+                <nav id="nav-menu" class="clearfix">
+                    <a class="current" href="https://dinggd.com">首页</a>
+                    
+                    <a  href="https://dinggd.com/archives/" title="归档">归档</a>
+                    
+                    <a  href="https://dinggd.com/about/" title="关于">关于</a>
+                    
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+
+    <div id="body">
+        <div class="container">
+            <div class="col-group">
+
+                <div class="col-8" id="main">
+                    
+<div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#重构之路">重构之路</a>
+      <ul>
+        <li><a href="#1-抽奖逻辑优化by-阿柒">1. 抽奖逻辑优化（by 阿柒）</a></li>
+        <li><a href="#2-gm指令处理优化by-零下">2. GM指令处理优化（by 零下）</a></li>
+        <li><a href="#3-客户端协议回包优化by-追光">3. 客户端协议回包优化（by 追光）</a></li>
+        <li><a href="#4-功能解锁优化by-神风烈士提尔">4. 功能解锁优化（by 神风烈士提尔）</a></li>
+        <li><a href="#5-配置文件检查机制优化by-王小石">5. 配置文件检查机制优化（by 王小石）</a></li>
+        <li><a href="#6-邮件系统重构by-东东">6. 邮件系统重构（by 东东）</a></li>
+        <li><a href="#7-任务系统重构by-东东王小石">7. 任务系统重构（by 东东/王小石）</a></li>
+        <li><a href="#8-战斗服战斗逻辑线程模型重构by-王小石">8. 战斗服战斗逻辑线程模型重构（by 王小石）</a></li>
+      </ul>
+    </li>
+    <li><a href="#结束语">结束语</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
+    <article class="post">
+        <header>
+            <h1 class="post-title">少三2后端代码的重构之路</h1>
+        </header>
+        <date class="post-meta meta-date">
+            2021年10月5日
+        </date>
+        
+        <div class="post-meta">
+            <span>|</span>
+            
+            <span class="meta-category"><a href='/categories/%E4%BB%A3%E7%A0%81%E7%A7%80'>代码秀</a></span>
+            
+        </div>
+        
+        
+        
+        <div class="post-content">
+            <h2 id="前言">前言</h2>
+<p>作为程序猿，我们的工作就是编写代码，每个项目对代码质量的要求不一，每个人对代码质量的重视度也不一样，很多人将项目中的代码质量不高归咎于项目组的领导重视度不高。是的，对于项目组来说，大家的关注点都在项目进度及功能完成度上面，至于你的逻辑代码是怎么写的，只有程序猿自己知道，即使是屎一样的代码，只要在规定的时间内完成，最后的运行结果是正确的，其他就都不重要了。所以，越是老项目，越是没有人愿意去维护，我们只负责制造屎山，却不负责清理屎山，久而久之，这座山也就越堆越高了。也许，很多人觉得最好的解决办法是跳槽，然而，很大的概率是：你刚从一座屎山跳了出来，却掉进了另一座屎山。</p>
+<p>对于项目组技术管理者，我们就不能仅仅着眼于项目进度和完成度，我们要重视代码质量，否则这座屎山只能像五指山一样压着你不能动弹。那如何避免这样的事情发生呢？第一、重视代码设计，如果在写代码之前就规划好代码结构，那最终编写出的代码应该差不到哪里；第二、重视代码重构，在每次修改代码时，不是一味的以完成任务为目标，而是站在整体代码结构的角度，如果发现代码结构已经无法适应策划需求，那就必须进行代码重构。在大多数项目中，造成屎山越堆越高的最大原因就是：大家都是以最小的改动来修改代码，却不愿意重构代码，最终补丁式代码越来越臃肿。</p>
+<p>必须承认，在某些情况下，我们需要在设计和时间之间做妥协，为了运营手段需要尽快上线，而忽略代码设计的情况确实存在。但我们要对这些历史欠债做到心中有数，在版本节奏缓下来的时候通过代码重构把这些债还上。最近给少三2后端同学布置一个作业，把自己在项目中看到的问题做一次盘点，然后做一次还债，在一人一杯奶茶的动力下，以下是这次集体还债的战果。</p>
+<h2 id="重构之路">重构之路</h2>
+<h3 id="1-抽奖逻辑优化by-阿柒">1. 抽奖逻辑优化（by 阿柒）</h3>
+<h4 id="优化思路">优化思路</h4>
+<p>做风华鉴功能时简单优化了抽奖逻辑，主要有两点：</p>
+<ul>
+<li>随机次数优化，原来for循环中每次都有重新执行SelectOneInSection方法，有性能消耗；</li>
+<li>奖池仅支持int为key的map，后续扩展比较麻烦，使用interface{}作为奖池唯一key，可以支持各种奖池配置；</li>
+</ul>
+<h4 id="代码设计">代码设计</h4>
+<p>
+        <a data-fancybox="gallery" href="/images/draw1.png">
+            <img class="mx-auto" alt="draw1" src="/images/draw1.png" />
+        </a>
+    </p>
+<p>
+        <a data-fancybox="gallery" href="/images/draw2.png">
+            <img class="mx-auto" alt="draw2" src="/images/draw2.png" />
+        </a>
+    </p>
+<h3 id="2-gm指令处理优化by-零下">2. GM指令处理优化（by 零下）</h3>
+<h4 id="优化思路-1">优化思路</h4>
+<ul>
+<li>目前游戏的GM指令都是diplomat通过同一个grpc请求转发给游戏服；</li>
+<li>场景下收到Grpc请求后通过handleGrpcMessage方法，switch data.Cmd来处理，导致所有的gm指令的处理耦合在一起，一个fucntion的代码量越来越大，改动起来不方便；</li>
+<li>优化的方案可以参考协议处理的方案，给不同的data.Cmd注册不同的command，每个command处理自己的业务逻辑，这样每条GM指令可以做到解耦，修改起来互不影响；</li>
+</ul>
+<h4 id="代码设计-1">代码设计</h4>
+<ol>
+<li>新增grpc_command.go 文件</li>
+</ol>
+<p>
+        <a data-fancybox="gallery" href="/images/grpc_cmd1.png">
+            <img class="mx-auto" alt="grpc_cmd1" src="/images/grpc_cmd1.png" />
+        </a>
+    </p>
+<ol start="2">
+<li>Scene下新增GrpcCmd字段</li>
+</ol>
+<p>
+        <a data-fancybox="gallery" href="/images/grpc_cmd2.png">
+            <img class="mx-auto" alt="grpc_cmd2" src="/images/grpc_cmd2.png" />
+        </a>
+    </p>
+<ol start="3">
+<li>新增一条grpc处理指令</li>
+</ol>
+<p>
+        <a data-fancybox="gallery" href="/images/grpc_cmd3.png">
+            <img class="mx-auto" alt="grpc_cmd3" src="/images/grpc_cmd3.png" />
+        </a>
+    </p>
+<ol start="4">
+<li>原handleGrpcMessage方法修改后</li>
+</ol>
+<p>
+        <a data-fancybox="gallery" href="/images/grpc_cmd4.png">
+            <img class="mx-auto" alt="grpc_cmd4" src="/images/grpc_cmd4.png" />
+        </a>
+    </p>
+<h3 id="3-客户端协议回包优化by-追光">3. 客户端协议回包优化（by 追光）</h3>
+<h4 id="优化思路-2">优化思路</h4>
+<ul>
+<li>游戏服每条协议的处理逻辑Process方法，都有大量的拦截逻辑或者回包逻辑，逻辑比较繁琐，经常会遗漏回包，甚至用错msgId的情况；</li>
+<li>考虑将 Process(*Scene, zebra.Session, *zebra.Message) bool 方法的返回值改成结构体；</li>
+<li>将原有的异常逻辑时return false改为return nil，无需回包但是return true的地方，返回特殊的无回包结构体；</li>
+<li>对客户端的回包统一在底层Dispatch时处理；</li>
+</ul>
+<h4 id="代码设计-2">代码设计</h4>
+<p>
+        <a data-fancybox="gallery" href="/images/response_package1.png">
+            <img class="mx-auto" alt="response_package1" src="/images/response_package1.png" />
+        </a>
+    </p>
+<p>
+        <a data-fancybox="gallery" href="/images/response_package2.png">
+            <img class="mx-auto" alt="response_package2" src="/images/response_package2.png" />
+        </a>
+    </p>
+<p>
+        <a data-fancybox="gallery" href="/images/response_package3.png">
+            <img class="mx-auto" alt="response_package3" src="/images/response_package3.png" />
+        </a>
+    </p>
+<p>
+        <a data-fancybox="gallery" href="/images/response_package4.png">
+            <img class="mx-auto" alt="response_package4" src="/images/response_package4.png" />
+        </a>
+    </p>
+<p>
+        <a data-fancybox="gallery" href="/images/response_package5.png">
+            <img class="mx-auto" alt="response_package5" src="/images/response_package5.png" />
+        </a>
+    </p>
+<p>
+        <a data-fancybox="gallery" href="/images/response_package6.png">
+            <img class="mx-auto" alt="response_package6" src="/images/response_package6.png" />
+        </a>
+    </p>
+<h3 id="4-功能解锁优化by-神风烈士提尔">4. 功能解锁优化（by 神风烈士提尔）</h3>
+<h4 id="优化思路-3">优化思路</h4>
+<ul>
+<li>当前功能解锁逻辑是在处理消息逻辑的开始部分处理，每条客户端消息都需要单独处理，代码冗余，而且容易遗漏；</li>
+<li>在底层消息分发函数中，已经存在部分玩家相关逻辑，用于客户端消息断线重连时使用，如果将检测功能解锁的代码放入消息分发的函数内处理，可以减少大量的冗余代码，并且减少遗漏代码的可能；</li>
+</ul>
+<h4 id="代码设计-3">代码设计</h4>
+<ul>
+<li>当前的消息处理方式：</li>
+</ul>
+<p>
+        <a data-fancybox="gallery" href="/images/unlock1.png">
+            <img class="mx-auto" alt="unlock1" src="/images/unlock1.png" />
+        </a>
+    </p>
+<p>
+        <a data-fancybox="gallery" href="/images/unlock2.png">
+            <img class="mx-auto" alt="unlock2" src="/images/unlock2.png" />
+        </a>
+    </p>
+<p>
+        <a data-fancybox="gallery" href="/images/unlock3.png">
+            <img class="mx-auto" alt="unlock3" src="/images/unlock3.png" />
+        </a>
+    </p>
+<ul>
+<li>新的消息处理方式：</li>
+</ul>
+<p>
+        <a data-fancybox="gallery" href="/images/unlock5.png">
+            <img class="mx-auto" alt="unlock5" src="/images/unlock5.png" />
+        </a>
+    </p>
+<p>
+        <a data-fancybox="gallery" href="/images/unlock6.png">
+            <img class="mx-auto" alt="unlock6" src="/images/unlock6.png" />
+        </a>
+    </p>
+<p>
+        <a data-fancybox="gallery" href="/images/unlock7.png">
+            <img class="mx-auto" alt="unlock7" src="/images/unlock7.png" />
+        </a>
+    </p>
+<h3 id="5-配置文件检查机制优化by-王小石">5. 配置文件检查机制优化（by 王小石）</h3>
+<h4 id="优化思路-4">优化思路</h4>
+<ul>
+<li>目前配置文件检查只能在当前配置文件内部，无法关联配置表检查；</li>
+<li>将配置表检查逻辑放到配置文件加载之后，并把配置文件管理器指针传递到检查函数Check方法内，即可实现关联配置表检查；</li>
+</ul>
+<h4 id="代码设计-4">代码设计</h4>
+<ol>
+<li>当前配置检查逻辑</li>
+</ol>
+<p>
+        <a data-fancybox="gallery" href="/images/xmlcheck.png">
+            <img class="mx-auto" alt="xmlcheck" src="/images/xmlcheck.png" />
+        </a>
+    </p>
+<p>
+        <a data-fancybox="gallery" href="/images/xmlcheck1.png">
+            <img class="mx-auto" alt="xmlcheck1" src="/images/xmlcheck1.png" />
+        </a>
+    </p>
+<p>
+        <a data-fancybox="gallery" href="/images/xmlcheck2.png">
+            <img class="mx-auto" alt="xmlcheck2" src="/images/xmlcheck2.png" />
+        </a>
+    </p>
+<ol start="2">
+<li>修改后的配置检查逻辑</li>
+</ol>
+<p>
+        <a data-fancybox="gallery" href="/images/xmlcheck4.png">
+            <img class="mx-auto" alt="xmlcheck4" src="/images/xmlcheck4.png" />
+        </a>
+    </p>
+<p>
+        <a data-fancybox="gallery" href="/images/xmlcheck3.png">
+            <img class="mx-auto" alt="xmlcheck3" src="/images/xmlcheck3.png" />
+        </a>
+    </p>
+<h3 id="6-邮件系统重构by-东东">6. 邮件系统重构（by 东东）</h3>
+<p>
+        <a data-fancybox="gallery" href="/images/mail_example.png">
+            <img class="mx-auto" alt="mail" src="/images/mail_example.png" />
+        </a>
+    </p>
+<p>左侧为当前邮件系统的邮件结构，右侧为优化后的邮件结构，具体优化有如下几点：</p>
+<p>a. 抽象出MailBase结构，供系统邮件(SystemMail)和个人邮件(PersonMail)复用；</p>
+<p>b. 除了个人邮件(PersonMail)之外，新定义一个系统邮件(SystemMail)结构，用于保存GM系统群发的邮件，这类邮件有着共同的邮件内容，只是接受人不同，可能是一个收件人列表，也可能是一些筛选条件，符合条件的玩家都可以收到这份邮件；</p>
+<p>c. 取消语音相关的字段，配置一条通用的语音邮件配置，通过动态参数(params)存储相关内容，用于客户端解析；</p>
+<p>d. 取消gotAward字段，复用status字段表示，如果是存在附件的邮件，领奖状态使用已读状态表示，这样玩家未领取的奖励会一直提示为新邮件（对玩家更友好）；</p>
+<h3 id="7-任务系统重构by-东东王小石">7. 任务系统重构（by 东东/王小石）</h3>
+<p>当前任务系统结构图</p>
+<p>
+        <a data-fancybox="gallery" href="/images/NGAME2%e4%bb%bb%e5%8a%a1%e7%b3%bb%e7%bb%9f.png">
+            <img class="mx-auto" alt="NGAME2任务系统" src="/images/NGAME2%e4%bb%bb%e5%8a%a1%e7%b3%bb%e7%bb%9f.png" />
+        </a>
+    </p>
+<p>新通用任务系统结构图</p>
+<p>
+        <a data-fancybox="gallery" href="/images/NGAME3%e9%80%9a%e7%94%a8%e4%bb%bb%e5%8a%a1%e7%b3%bb%e7%bb%9f.png">
+            <img class="mx-auto" alt="NGAME3通用任务系统" src="/images/NGAME3%e9%80%9a%e7%94%a8%e4%bb%bb%e5%8a%a1%e7%b3%bb%e7%bb%9f.png" />
+        </a>
+    </p>
+<p>优化内容：</p>
+<p>a. 将事件触发器Action改名为EventTrigger更有意义，ExecuteHandler改名为Trigger亦同，并在Manager中增加了部分EventHandler的处理方法；</p>
+<p>b. 事件处理器EventHandler设计更合理，增加事件记录器EventRecord及任务检查器RequirementChecker相关的方法支持，事件处理可以使用通用的CommonEventHandler，也可以独立设计私有的EventHandler；</p>
+<p>c. 抽象出任务检查器RequirementChecker，主要负责任务进度处理与任务完成情况检查；</p>
+<p>d. 抽象出事件记录器EventRecorder，主要负责任务进度记录存储，支持查询，保存及客户端数据同步，有统一的玩家事件记录管理器UserEventRecorderManager进行管理；</p>
+<p>e. 抽象出状态类任务条件RequirementCondition及进度类任务条件RequirementProgressCondition，主要负责任务的条件检查，支持结合统一的配置条件与事件记录器进行条件检查；</p>
+<h3 id="8-战斗服战斗逻辑线程模型重构by-王小石">8. 战斗服战斗逻辑线程模型重构（by 王小石）</h3>
+<h4 id="优化思路-5">优化思路</h4>
+<ul>
+<li>当前战斗服中战斗逻辑线程是根据业务逻辑实际需要从线程池中获取，使用一个自增ID，确保能够平均分配给所有战斗逻辑线程，并且开始只会创建一个战斗逻辑线程，并根据后续请求动态创建战斗逻辑线程；</li>
+<li>这样的设计存在一个缺陷，就是消息分发器无法判断当前战斗线程池中的负载状态，在战斗代码正常的情况下，这样的设计没有问题，但如果战斗逻辑存在不平衡，有的战斗时间较长，有的战斗时间较短，甚至有可能存在低概率的死循环逻辑，造成部分战斗代码卡死，则会影响所有玩家的战斗体验，造成大面积的玩家战斗卡死的情况；</li>
+<li>优化思路为在战斗管理器中，增加一个战斗消息队列（channel），战斗逻辑线程则按照配置数量全部启动，而且是主动接受战斗消息队列的战斗消息，如果有空闲就处理战斗消息，如果一直忙碌则不会再接收战斗消息，即使是低概率的死循环逻辑，影响的仅仅是个别玩家，避免出现大面积交叉感染的情况；</li>
+</ul>
+<h4 id="代码设计-5">代码设计</h4>
+<ol>
+<li>
+<p>战斗管理器AsyncBattleManager中增加一个战斗消息*BattleMessage的channel用作战斗消息队列AsyncBattleQueue。
+
+        <a data-fancybox="gallery" href="/images/battle_queue1.png">
+            <img class="mx-auto" alt="battle_queue1" src="/images/battle_queue1.png" />
+        </a>
+    </p>
+</li>
+<li>
+<p>在Init()时启动足够的战斗逻辑线程池，并在收到网络传输的战斗消息时，将战斗消息插入消息队列AsyncBattleQueue。
+
+        <a data-fancybox="gallery" href="/images/battle_queue2.png">
+            <img class="mx-auto" alt="battle_queue2" src="/images/battle_queue2.png" />
+        </a>
+    </p>
+</li>
+<li>
+<p>在战斗逻辑线程AsyncBattleUnit中，初始化时保存战斗管理器指针。
+
+        <a data-fancybox="gallery" href="/images/battle_queue3.png">
+            <img class="mx-auto" alt="battle_queue3" src="/images/battle_queue3.png" />
+        </a>
+    </p>
+</li>
+<li>
+<p>在战斗逻辑线程AsyncBattleUnit中，每个时钟周期都会主动从战斗管理器的消息队列AsyncBattleQueue中读取战斗消息。
+
+        <a data-fancybox="gallery" href="/images/battle_queue4.png">
+            <img class="mx-auto" alt="battle_queue4" src="/images/battle_queue4.png" />
+        </a>
+    </p>
+</li>
+<li>
+<p>战斗逻辑线程AsyncBattleUnit不再监听网络消息。
+
+        <a data-fancybox="gallery" href="/images/battle_queue5.png">
+            <img class="mx-auto" alt="battle_queue5" src="/images/battle_queue5.png" />
+        </a>
+    </p>
+</li>
+<li>
+<p>战斗业务处理逻辑不再处理战斗管理器AsyncBattleManager的消息。
+
+        <a data-fancybox="gallery" href="/images/battle_queue6.png">
+            <img class="mx-auto" alt="battle_queue6" src="/images/battle_queue6.png" />
+        </a>
+    </p>
+</li>
+</ol>
+<h2 id="结束语">结束语</h2>
+<p>综合看少三2后端的代码，其实是很优秀的，因为我们会定期重构，这样代码才会越来越优秀。并不是我们很闲，只是因为我们对自己要求更高，我们想要做的更好，只有精益求精了，我们才能做出更好的项目来。这些优化有平时做业务时顺手做的优化，也有的只是一个设计思路，更有的已经在新项目中已经重构。所以，这只是一次代码秀，让我们这些平时专注专研技术的程序猿们得到一次曝光的机会，让大家了解到我们的少年程序猿都是很优秀的，也期待优秀的你的加入。</p>
+<p>
+        <a data-fancybox="gallery" href="/images/wechat.png">
+            <img class="mx-auto" alt="微信公众号" src="/images/wechat.png" />
+        </a>
+    </p>
+
+        </div>
+
+        
+
+
+        <div class="post-meta meta-tags">
+            
+            <ul class="clearfix">
+                
+                <li><a href='/tags/%E5%B0%91%E4%B8%892'>少三2</a></li>
+                
+                <li><a href='/tags/%E4%BB%A3%E7%A0%81%E7%A7%80'>代码秀</a></li>
+                
+                <li><a href='/tags/%E4%BB%A3%E7%A0%81%E9%87%8D%E6%9E%84'>代码重构</a></li>
+                
+            </ul>
+            
+        </div>
+    </article>
+    
+    
+
+    
+    
+</div>
+
+                    <footer id="footer">
+    <div>
+        &copy; 2021 <a href="https://dinggd.com">少年码上记 By 东东</a>
+        
+    </div>
+    <br />
+    <div>
+        <div class="github-badge">
+            <a href="https://gohugo.io/" target="_black" rel="nofollow"><span class="badge-subject">Powered by</span><span class="badge-value bg-blue">Hugo</span></a>
+        </div>
+        
+        <div class="github-badge">
+            <a href="https://github.com/flysnow-org/maupassant-hugo" target="_black"><span class="badge-subject">Theme</span><span class="badge-value bg-yellowgreen">Maupassant</span></a>
+        </div>
+    </div>
+</footer>
+
+
+    
+    <script type="text/javascript">
+        window.MathJax = {
+            tex2jax: {
+                inlineMath: [['$', '$']],
+                processEscapes: true
+                }
+            };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script><script src="https://cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+<a id="rocket" href="#top"></a>
+<script type="text/javascript" src='/js/totop.js?v=0.0.0' async=""></script>
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-9783893-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+
+
+
+
+
+
+                </div>
+
+                <div id="secondary">
+    <section class="widget">
+        <form id="search" action='https://dinggd.com/search/' method="get" accept-charset="utf-8" target="_blank" _lpchecked="1">
+      
+      <input type="text" name="q" maxlength="20" placeholder="Search">
+      <input type="hidden" name="sitesearch" value="https://dinggd.com">
+      <button type="submit" class="submit icon-search"></button>
+</form>
+    </section>
+    
+    <section class="widget">
+        <h3 class="widget-title">最近文章</h3>
+<ul class="widget-list">
+    
+    <li>
+        <a href="https://dinggd.com/post/%E5%B0%91%E4%B8%892%E5%90%8E%E7%AB%AF%E4%BB%A3%E7%A0%81%E7%9A%84%E9%87%8D%E6%9E%84%E4%B9%8B%E8%B7%AF/" title="少三2后端代码的重构之路">少三2后端代码的重构之路</a>
+    </li>
+    
+    <li>
+        <a href="https://dinggd.com/post/%E6%89%8B%E6%B8%B8%E5%BC%80%E5%8F%91%E4%B8%AD%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86/" title="手游开发中如何进行版本管理">手游开发中如何进行版本管理</a>
+    </li>
+    
+    <li>
+        <a href="https://dinggd.com/post/%E5%88%86%E5%8C%BA%E5%88%86%E6%9C%8D%E7%B1%BB%E6%89%8B%E6%B8%B8%E5%A6%82%E4%BD%95%E5%BA%94%E5%AF%B9OB%E7%9E%AC%E9%97%B4%E6%B5%81%E9%87%8F/" title="分区分服类手游如何应对OB瞬间流量">分区分服类手游如何应对OB瞬间流量</a>
+    </li>
+    
+    <li>
+        <a href="https://dinggd.com/post/%E5%8D%A1%E7%89%8C%E6%B8%B8%E6%88%8F%E7%90%86%E6%83%B3%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E6%96%B9%E6%A1%88/" title="卡牌游戏理想中的数据存储方案">卡牌游戏理想中的数据存储方案</a>
+    </li>
+    
+    <li>
+        <a href="https://dinggd.com/post/%E7%BB%93%E6%9E%84%E4%BD%93%E5%B5%8C%E5%A5%97%E9%80%A0%E6%88%90%E7%9A%84%E7%BC%96%E8%AF%91%E8%B5%84%E6%BA%90%E6%B6%88%E8%80%97%E9%97%AE%E9%A2%98/" title="结构体内嵌造成的编译资源消耗问题总结">结构体内嵌造成的编译资源消耗问题总结</a>
+    </li>
+    
+    <li>
+        <a href="https://dinggd.com/post/%E9%A1%B9%E7%9B%AE%E4%B8%AD%E5%BA%94%E8%AF%A5%E7%A6%81%E7%94%A8fallthrough/" title="项目中应该禁用fallthrough">项目中应该禁用fallthrough</a>
+    </li>
+    
+    <li>
+        <a href="https://dinggd.com/post/%E6%B5%85%E8%BF%B0TODO%E7%9A%84%E4%BD%9C%E7%94%A8/" title="浅述TODO的作用">浅述TODO的作用</a>
+    </li>
+    
+</ul>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/categories/'>分类</a></h3>
+<ul class="widget-list">
+    
+    <li><a href="https://dinggd.com/categories/%E4%BB%A3%E7%A0%81%E7%A7%80/">代码秀 (1)</a></li>
+    
+    <li><a href="https://dinggd.com/categories/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/">代码规范 (2)</a></li>
+    
+    <li><a href="https://dinggd.com/categories/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/">游戏架构 (1)</a></li>
+    
+    <li><a href="https://dinggd.com/categories/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">经验总结 (3)</a></li>
+    
+</ul>
+    </section>
+
+    <section class="widget">
+        <h3 class="widget-title"><a href='/tags/'>标签</a></h3>
+<div class="tagcloud">
+    
+    <a href="https://dinggd.com/tags/OB/">OB</a>
+    
+    <a href="https://dinggd.com/tags/TODO/">TODO</a>
+    
+    <a href="https://dinggd.com/tags/fallthrough/">fallthrough</a>
+    
+    <a href="https://dinggd.com/tags/golang/">golang</a>
+    
+    <a href="https://dinggd.com/tags/leveldb/">leveldb</a>
+    
+    <a href="https://dinggd.com/tags/mongodb/">mongodb</a>
+    
+    <a href="https://dinggd.com/tags/mysql/">mysql</a>
+    
+    <a href="https://dinggd.com/tags/redis/">redis</a>
+    
+    <a href="https://dinggd.com/tags/switch/">switch</a>
+    
+    <a href="https://dinggd.com/tags/%E4%BB%A3%E7%A0%81%E7%A7%80/">代码秀</a>
+    
+    <a href="https://dinggd.com/tags/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/">代码规范</a>
+    
+    <a href="https://dinggd.com/tags/%E4%BB%A3%E7%A0%81%E9%87%8D%E6%9E%84/">代码重构</a>
+    
+    <a href="https://dinggd.com/tags/%E5%85%AC%E6%B5%8B/">公测</a>
+    
+    <a href="https://dinggd.com/tags/%E5%88%86%E5%8C%BA%E5%88%86%E6%9C%8D/">分区分服</a>
+    
+    <a href="https://dinggd.com/tags/%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/">分支管理</a>
+    
+    <a href="https://dinggd.com/tags/%E5%8C%BF%E5%90%8D%E6%88%90%E5%91%98/">匿名成员</a>
+    
+    <a href="https://dinggd.com/tags/%E5%AD%98%E5%82%A8%E6%96%B9%E6%A1%88/">存储方案</a>
+    
+    <a href="https://dinggd.com/tags/%E5%B0%91%E4%B8%892/">少三2</a>
+    
+    <a href="https://dinggd.com/tags/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/">开发流程</a>
+    
+    <a href="https://dinggd.com/tags/%E6%89%8B%E6%B8%B8/">手游</a>
+    
+    <a href="https://dinggd.com/tags/%E6%8A%80%E6%9C%AF%E9%9A%BE%E7%82%B9/">技术难点</a>
+    
+    <a href="https://dinggd.com/tags/%E6%B3%A8%E9%87%8A/">注释</a>
+    
+    <a href="https://dinggd.com/tags/%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84/">游戏架构</a>
+    
+    <a href="https://dinggd.com/tags/%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6/">版本控制</a>
+    
+    <a href="https://dinggd.com/tags/%E7%BB%8F%E9%AA%8C%E6%80%BB%E7%BB%93/">经验总结</a>
+    
+    <a href="https://dinggd.com/tags/%E7%BB%93%E6%9E%84%E4%BD%93%E5%86%85%E5%B5%8C/">结构体内嵌</a>
+    
+    <a href="https://dinggd.com/tags/%E7%BB%A7%E6%89%BF/">继承</a>
+    
+    <a href="https://dinggd.com/tags/%E7%BC%96%E8%AF%91%E9%80%9F%E5%BA%A6/">编译速度</a>
+    
+</div>
+    </section>
+
+    
+
+    <section class="widget">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget-list">
+            <li><a href="https://dinggd.com/index.xml">文章 RSS</a></li>
+        </ul>
+    </section>
+</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

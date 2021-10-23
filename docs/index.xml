@@ -6,7 +6,16 @@
     <description>Recent content on 少年码上记</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 05 May 2021 12:11:38 +0800</lastBuildDate><atom:link href="https://dinggd.com/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 05 Oct 2021 16:38:09 +0800</lastBuildDate><atom:link href="https://dinggd.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>少三2后端代码的重构之路</title>
+      <link>https://dinggd.com/post/%E5%B0%91%E4%B8%892%E5%90%8E%E7%AB%AF%E4%BB%A3%E7%A0%81%E7%9A%84%E9%87%8D%E6%9E%84%E4%B9%8B%E8%B7%AF/</link>
+      <pubDate>Tue, 05 Oct 2021 16:38:09 +0800</pubDate>
+      
+      <guid>https://dinggd.com/post/%E5%B0%91%E4%B8%892%E5%90%8E%E7%AB%AF%E4%BB%A3%E7%A0%81%E7%9A%84%E9%87%8D%E6%9E%84%E4%B9%8B%E8%B7%AF/</guid>
+      <description>前言 作为程序猿，我们的工作就是编写代码，每个项目对代码质量的要求不一，每个人对代码质量的重视度也不一样，很多人将项目中的代码质量不高归咎于项目组的领导重视度不高。是的，对于项目组来说，大家的关注点都在项目进度及功能完成度上面，至于你的逻辑代码是怎么写的，只有程序猿自己知道，即使是</description>
+    </item>
+    
     <item>
       <title>手游开发中如何进行版本管理</title>
       <link>https://dinggd.com/post/%E6%89%8B%E6%B8%B8%E5%BC%80%E5%8F%91%E4%B8%AD%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86/</link>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>代码重构 on 少年码上记</title>
+    <link>https://dinggd.com/tags/%E4%BB%A3%E7%A0%81%E9%87%8D%E6%9E%84/</link>
+    <description>Recent content in 代码重构 on 少年码上记</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Tue, 05 Oct 2021 16:38:09 +0800</lastBuildDate><atom:link href="https://dinggd.com/tags/%E4%BB%A3%E7%A0%81%E9%87%8D%E6%9E%84/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>少三2后端代码的重构之路</title>
+      <link>https://dinggd.com/post/%E5%B0%91%E4%B8%892%E5%90%8E%E7%AB%AF%E4%BB%A3%E7%A0%81%E7%9A%84%E9%87%8D%E6%9E%84%E4%B9%8B%E8%B7%AF/</link>
+      <pubDate>Tue, 05 Oct 2021 16:38:09 +0800</pubDate>
+      
+      <guid>https://dinggd.com/post/%E5%B0%91%E4%B8%892%E5%90%8E%E7%AB%AF%E4%BB%A3%E7%A0%81%E7%9A%84%E9%87%8D%E6%9E%84%E4%B9%8B%E8%B7%AF/</guid>
+      <description>前言 作为程序猿，我们的工作就是编写代码，每个项目对代码质量的要求不一，每个人对代码质量的重视度也不一样，很多人将项目中的代码质量不高归咎于项目组的领导重视度不高。是的，对于项目组来说，大家的关注点都在项目进度及功能完成度上面，至于你的逻辑代码是怎么写的，只有程序猿自己知道，即使是</description>
+    </item>
+    
+  </channel>
+</rss>
